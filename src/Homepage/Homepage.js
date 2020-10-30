@@ -10,8 +10,7 @@ class Homepage extends Component{
 
         return(
             <div>
-                homepage
-                <CountriesList></CountriesList>
+                <CountriesList continent=""></CountriesList>
             </div>
         )
     }

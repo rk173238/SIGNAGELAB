@@ -31,7 +31,7 @@ const mergeLanguage=(l)=>{
 }
 const CountryDetails =(props)=>{
     const res=useQuery(details(props.code))
-    console.log(res)
+    // console.log(res)
     if(res.loading) return <p>LOADING</p>
     if(res.error) return <p>{res.error}</p>
     let data=res.data.country

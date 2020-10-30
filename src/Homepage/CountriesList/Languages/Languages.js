@@ -18,9 +18,10 @@ const mergeLanguage=(l)=>{
 }
 const Languages=(props)=>{
     const res=useQuery(languagesList(props.code))
-    console.log(res)
+    // console.log(res)
     if(res.loading) return <p>LOADING</p>
     if(res.error) return <p>{res.error}</p>
+    console.log(res.data)
     return(
         <p>{mergeLanguage(res.data.country.languages)}</p>
     )

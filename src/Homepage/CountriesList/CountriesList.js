@@ -29,13 +29,31 @@ const list=gql`
                     }
                 }
             }`;
+const continentList=gql`
+query list{
+    continent(code:"EU"){
+    countries{
+        code
+        name
+        capital
+        continent{
+            name
+        }
+        languages{
+            code
+            name
+        }
+    }
+}
+}`;
 const CountriesList =(props)=>{
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [openCountryDetails,setOpenCountryDetails]=React.useState(false);
     const [countryCode,setCountryCode]=React.useState('')
     const res=useQuery(list)
-    console.log(res)
+    // props.continent===''?useQuery(list):useQuery(continentList)
+    // console.log(res)
 
     
     const handleChangePage = (event, newPage) => {
