@@ -8,7 +8,12 @@ import TableRow from '@material-ui/core/TableRow';
 import { Query,useQuery } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Button } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Languages from './Languages/Languages';
+import CountryDetails from './CountryDetails/CountryDetails';
+import { Services } from '../../Services/Services';
 const list=gql`
             query list{
                 countries{
@@ -27,7 +32,8 @@ const list=gql`
 const CountriesList =(props)=>{
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    
+    const [openCountryDetails,setOpenCountryDetails]=React.useState(false);
+    const [countryCode,setCountryCode]=React.useState('')
     const res=useQuery(list)
     console.log(res)
 
@@ -39,7 +45,13 @@ const CountriesList =(props)=>{
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-    
+    const openDialog=(code)=>{
+        setOpenCountryDetails(true);
+        setCountryCode(code);
+    }
+    const closeCountryDetails=()=>{
+        setOpenCountryDetails(false)
+    }
     if(res.loading) return <p>LOADING</p>
     if(res.error) return <p>{res.error}</p>
     let data=res.data
@@ -59,7 +71,7 @@ const CountriesList =(props)=>{
                 </TableHead>
                 <TableBody>
                     {data.countries.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((country,i)=>(
-                        <TableRow key={country.code} 
+                        <TableRow key={country.code} onClick={()=>openDialog(country.code)} 
                             style={i%2===0?
                                 {backgroundColor:'rgba(34, 133, 195, 0.62)',cursor:'pointer'}
                                 :{backgroundColor:'rgba(34, 195, 112, 0.62)',cursor:'pointer'}}>
@@ -67,7 +79,7 @@ const CountriesList =(props)=>{
                             <TableCell>{country.capital}</TableCell>
                             <TableCell><Languages code={country.code}/></TableCell>
                             <TableCell>{country.continent.name}</TableCell>
-                            <TableCell><Button variant="contained" color="primary" >{country.code}</Button></TableCell>
+                            <TableCell><Button variant="contained" color="primary" onClick={()=>openDialog(country.code)}>{country.code}</Button></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -81,6 +93,12 @@ const CountriesList =(props)=>{
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />
+            <Dialog open={openCountryDetails} onClose={closeCountryDetails}>
+                <DialogTitle>Country Detail</DialogTitle>
+                <DialogContent>
+                    <CountryDetails code={countryCode}></CountryDetails>
+                </DialogContent>
+            </Dialog>
         </div>
     )
 }
