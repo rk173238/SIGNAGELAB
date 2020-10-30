@@ -46,6 +46,7 @@ query list{
     }
 }
 }`;
+//Above query can be moduled with seperate services for different task
 
 //Fetch the data and list the important fields in table with pagination
 const CountriesList =(props)=>{
