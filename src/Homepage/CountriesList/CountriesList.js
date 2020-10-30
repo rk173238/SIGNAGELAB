@@ -46,6 +46,8 @@ query list{
     }
 }
 }`;
+
+//Fetch the data and list the important fields in table with pagination
 const CountriesList =(props)=>{
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -79,7 +81,7 @@ const CountriesList =(props)=>{
             <Table>
                 <TableHead>
                     <TableRow style={{backgroundColor:'rgba(190, 34, 195, 0.62)'}}>
-                        <TableCell>Name</TableCell>
+                        <TableCell>Country Name</TableCell>
                         <TableCell>Capital</TableCell>
                         <TableCell>Languages</TableCell>
                         <TableCell>Continent</TableCell>

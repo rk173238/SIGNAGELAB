@@ -16,6 +16,7 @@ const mergeLanguage=(l)=>{
     })
     return ans.slice(0,ans.length-1)
 }
+//fetch language for each countries, merge and return as a seperate component
 const Languages=(props)=>{
     const res=useQuery(languagesList(props.code))
     // console.log(res)

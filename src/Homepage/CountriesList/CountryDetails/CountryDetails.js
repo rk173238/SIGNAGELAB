@@ -29,6 +29,7 @@ const mergeLanguage=(l)=>{
     })
     return ans.slice(0,ans.length-1)
 }
+//Seperate component for fatching a single country details and return it to dialog component
 const CountryDetails =(props)=>{
     const res=useQuery(details(props.code))
     // console.log(res)
